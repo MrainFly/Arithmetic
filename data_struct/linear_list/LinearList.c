@@ -144,9 +144,82 @@ int LinearList_LocateElem(linear_list* L, ElemType* e, int(*b_f)(ElemType* a, El
 	return FAILED;
 }
 
+// order = 1 mean ascending order
+// order = -1 mean descending order
+// bubble sort
+int LinearList_Sort(linear_list* L, int order){
+	ElemType temp;
+	uint32_t i = 0;
+	uint32_t j = 0;
+	if (L == NULL){
+		return PARAMETER_ERROR;
+	}
 
+	for(i = L->length - 1; i > 0; i--){
+		for(j = 0; j < i; j++){
 
+			if (order == 1){
+				if (L->base[j] > L->base[j+1]){
+					temp = L->base[j];
+					L->base[j] = L->base[j+1];
+					L->base[j+1] = temp;
+				}
+			}
 
+			if (order == -1){
+				if (L->base[j] < L->base[j+1]){
+					temp = L->base[j];
+					L->base[j] = L->base[j+1];
+					L->base[j+1] = temp;
+				}
+			}
+		}
+	}
+
+	return PASS;
+}
+
+int LinearList_Merge(linear_list* L0, linear_list* L1, linear_list* L_Merge, int order){
+	if (L0 == NULL || L1 == NULL || L_Merge == NULL){
+		return PARAMETER_ERROR;
+	}
+	LinearList_Sort(L0, order);
+	LinearList_Sort(L1, order);
+
+	if (LinearList_Init(L_Merge) != PASS){
+		return FAILED;
+	}
+	uint32_t p_l0 = 0;
+	uint32_t p_l1 = 0;
+
+	while ((p_l0 < L0->length) && (p_l1 < L1->length)){
+		if (L0->base[p_l0] > L1->base[p_l1]){
+			if (order == 1){
+				LinearList_Append (L_Merge, L1->base[p_l1++]);
+			}
+			if (order == -1){
+				LinearList_Append (L_Merge, L0->base[p_l0++]);
+			}
+		}else{
+			if (order == 1){
+				LinearList_Append (L_Merge, L0->base[p_l0++]);
+			}
+			if (order == -1){
+				LinearList_Append (L_Merge, L1->base[p_l1++]);
+			}
+		}
+	}
+
+	while (p_l0 < L0->length){
+		LinearList_Append (L_Merge, L0->base[p_l0++]);
+	}
+
+	while (p_l1 < L1->length){
+		LinearList_Append (L_Merge, L1->base[p_l1++]);
+	}
+
+	return PASS;
+}
 
 
 
