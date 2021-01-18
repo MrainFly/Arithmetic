@@ -42,7 +42,7 @@ int LinkList_LocateElem(link_list* header, LL_ElemType* e, uint32_t* locate){
 	uint32_t temp = 1;
 	link_list *p = header->next;
 
-	while(p && p->data != e){
+	while(p && (p->data != *e)){
 		p = p->next;
 		temp++;
 	}
@@ -201,6 +201,21 @@ int LinkList_Merge(link_list* L0, link_list* L1, link_list* L_Merge, int order){
 		LinkList_InsertElem(LM_P, j++, &L1_P->data);
 		L1_P = L1_P->next;
 	}
+
+	return PASS;
+}
+
+int LinkList_PriorInsert(link_list* p, LL_ElemType* e){
+	if (p == NULL || e == NULL){
+		return PARAMETER_ERROR;
+	}
+
+	link_list* new = (link_list*)malloc(sizeof(link_list));
+
+	new->data = p->data;
+	new->next = p->next;
+	p->data = *e;
+	p->next = new;
 
 	return PASS;
 }
