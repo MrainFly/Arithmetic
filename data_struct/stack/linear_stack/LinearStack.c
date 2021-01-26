@@ -103,7 +103,7 @@ int LinearStack_Full(linear_stack* stack){
 }
 
 int LinearStack_Push(linear_stack* stack, LinearStack_ElemType* data){
-	if(stack ==NULL || data == NULL){
+	if(stack ==NULL || data == NULL || !LinearStack_Full(stack)){
 		return PARAMETER_ERROR;
 	}
 

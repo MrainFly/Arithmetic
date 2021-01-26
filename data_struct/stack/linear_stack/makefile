@@ -1,11 +1,11 @@
 CC = gcc
-SRCS = main.c LinearList.c
+SRCS = $(wildcard *.c)
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 FLAG = -g -Wall
-INCLUDE = -I../.
+INCLUDE = -I../../.
 LIBS_DIR =
 LIBS = -lm
-TARGET = prog
+TARGET = $(shell basename `pwd`)
 
 .PHONY: clean all
 
@@ -19,6 +19,4 @@ $(OBJS):%.o:%.c
 
 clean:
 	rm -rf $(TARGET) $(OBJS)
-	
-	
 

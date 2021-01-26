@@ -9,6 +9,7 @@
 #define DATA_STRUCT_PUBLIC_H_
 
 #include <stdio.h>
+#include <assert.h>
 
 #ifndef LOG
 #define LOG(string, ...)     do{ \
