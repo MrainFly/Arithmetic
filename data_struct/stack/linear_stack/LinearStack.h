@@ -13,7 +13,7 @@
 #define LinearStack_TopInit     (0)
 
 #define LinearStack_MaxSize            (100)
-typedef char LinearStack_ElemType;
+typedef int LinearStack_ElemType;
 
 typedef struct {
 	LinearStack_ElemType data[LinearStack_MaxSize];
