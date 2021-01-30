@@ -5,4 +5,6 @@
  *      Author: eason
  */
 
-
+int main(){
+	return 0;
+}
