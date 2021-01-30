@@ -9,61 +9,61 @@
 
 int LoopQueue_Init(loop_queue* queue){
 	if (queue == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	queue->head = queue->rear = 0;
 
-	return PASS;
+	return true;
 }
 
 int LoopQueue_Empty(loop_queue* queue){
 	if (queue == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 	if(queue->head == queue->rear){
-		return PASS;
+		return true;
 	}
 
-	return FAILED;
+	return false;
 }
 
 int LoopQueue_Full(loop_queue* queue){
 	if (queue == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 	if((queue->rear + 1)%LoopQueue_MaxSize == queue->head){
-		return PASS;
+		return true;
 	}
 
-	return FAILED;
+	return false;
 }
 
 int LoopQueue_Insert(loop_queue* queue, LoopQueue_ElemType* elem){
 	if (queue == NULL || elem == NULL || !LoopQueue_Full(queue)){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	queue->data[queue->rear] = *elem;
 	queue->rear = (queue->rear + 1)%LoopQueue_MaxSize;
 
-	return PASS;
+	return true;
 }
 
 int LoopQueue_Delete(loop_queue* queue, LoopQueue_ElemType* elem){
 	if (queue == NULL || elem == NULL || !LoopQueue_Empty(queue)){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	*elem = queue->data[queue->head];
 	queue->head = (queue->head + 1)%LoopQueue_MaxSize;
 
-	return PASS;
+	return true;
 }
 
 int LoopQueue_Length(loop_queue* queue){
 	if (queue == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	return (queue->rear + LoopQueue_MaxSize - queue->head)%LoopQueue_MaxSize;

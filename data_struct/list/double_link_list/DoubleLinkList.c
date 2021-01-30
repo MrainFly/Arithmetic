@@ -9,7 +9,7 @@
 
 int DoubleLinkList_Init(double_link_list* header){
 	if (header == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	header->data = 0;
@@ -19,7 +19,7 @@ int DoubleLinkList_Init(double_link_list* header){
 
 int DoubleLinkList_GetElem(double_link_list* header, uint32_t i, D_ElemType* e){
 	if (header == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	double_link_list* p = header;
@@ -32,17 +32,17 @@ int DoubleLinkList_GetElem(double_link_list* header, uint32_t i, D_ElemType* e){
 
 	// p == NULL || j == i
 	if(!p){
-		return FAILED;
+		return false;
 	}
 
 	*e = p->data;
 
-	return PASS;
+	return true;
 }
 
 int DoubleLinkList_LocateElem(double_link_list* header, D_ElemType* e, uint32_t* locate){
 	if (header == NULL || e == NULL || locate == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	double_link_list* p = header->next;
@@ -54,22 +54,22 @@ int DoubleLinkList_LocateElem(double_link_list* header, D_ElemType* e, uint32_t*
 	}
 
 	if(!p){
-		return FAILED;
+		return false;
 	}
 
 	*locate = j;
 
-	return PASS;
+	return true;
 }
 
 int DoubleLinkList_PriorInsert(double_link_list* p, D_ElemType* e){
 	if (p == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	double_link_list* pointer = (double_link_list*)malloc(sizeof(double_link_list));
 	if(!pointer){
-		return MALLOC_ERROR;
+		return false;
 	}
 
 	pointer->data = *e;
@@ -79,17 +79,17 @@ int DoubleLinkList_PriorInsert(double_link_list* p, D_ElemType* e){
 	p->prior->next = pointer;
 	p->prior = pointer;
 
-	return PASS;
+	return true;
 }
 
 int DoubleLinkList_NextInsert(double_link_list* p, D_ElemType* e){
 	if (p == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	double_link_list* pointer = (double_link_list*)malloc(sizeof(double_link_list));
 	if(!pointer){
-		return MALLOC_ERROR;
+		return false;
 	}
 
 	pointer->data = *e;
@@ -103,12 +103,12 @@ int DoubleLinkList_NextInsert(double_link_list* p, D_ElemType* e){
 
 	p->next = pointer;
 
-	return PASS;
+	return true;
 }
 
 int DoubleLinkList_NextDelete(double_link_list* p, D_ElemType* e){
 	if (p == NULL || e == NULL || p->next == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 	*e = p->next->data;
 	// pointer to the delete item
@@ -123,12 +123,12 @@ int DoubleLinkList_NextDelete(double_link_list* p, D_ElemType* e){
 
 	free(pointer);
 
-	return PASS;
+	return true;
 }
 
 int DoubleLinkList_Delete(double_link_list* p, D_ElemType* e){
 	if (p == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	*e = p->data;
@@ -142,7 +142,7 @@ int DoubleLinkList_Delete(double_link_list* p, D_ElemType* e){
 
 	free(p);
 
-	return PASS;
+	return true;
 }
 
 
@@ -150,7 +150,7 @@ int DoubleLinkList_Delete(double_link_list* p, D_ElemType* e){
 // direction = -1 forward search
 int DoubleLinkList_Search(double_link_list* header, D_ElemType* e, int direction){
 	if(header == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	double_link_list* p = header;
@@ -165,6 +165,6 @@ int DoubleLinkList_Search(double_link_list* header, D_ElemType* e, int direction
 		}
 	}
 
-	return PASS;
+	return true;
 }
 

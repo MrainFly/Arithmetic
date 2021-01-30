@@ -9,18 +9,18 @@ int LinearList_Init(linear_list* L){
 	malloc(LINEAR_LIST_INIT_SIZE * sizeof(ElemType));
 
 	if(L->base == NULL){
-		return MALLOC_ERROR;
+		return false;
 	}
 
 	L->length = 0;
 	L->listsize = LINEAR_LIST_INIT_SIZE;
 
-	return PASS;
+	return true;
 }
 
 int LinearList_Destroy(linear_list* L){
 	if(L == NULL){
-		return PARAMETER_ERROR;		
+		return false;
 	}
 
 	free(L->base);
@@ -28,23 +28,39 @@ int LinearList_Destroy(linear_list* L){
 	L->length = 0;
 	L->listsize = 0;
 
-	return PASS;
+	return true;
+}
+
+int LinearList_Full(linear_list* L){
+	if(L->length == L->listsize){
+		return true;
+	}
+
+	return false;
+}
+
+int LinearList_Empty(linear_list* L){
+	if(L->length == 0){
+		return true;
+	}
+
+	return false;
 }
 
 int LinearList_Append(linear_list* L, ElemType e){
 	if (L == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 		// list full
-	if (L->length == L->listsize){
+	if (LinearList_Full(L)){
 		// realloc new list buffer
 		ElemType* newbase = (ElemType *)\
 		realloc(L->base, (LINEAR_LIST_INIT_SIZE + LINEAR_LIST_INCREMENT)\
 	 	* sizeof(ElemType));
 
 		if (newbase == NULL){
-			return MALLOC_ERROR;
+			return false;
 		}
 
 		L->base = newbase;
@@ -53,22 +69,22 @@ int LinearList_Append(linear_list* L, ElemType e){
 
 	L->base[L->length++] = e;
 
-	return PASS;
+	return true;
 }
 
 int LinearList_GetElem(linear_list* L, uint32_t i, ElemType* e){
-	if (L == NULL || e == NULL || i < 1 || i > L->length){
-		return PARAMETER_ERROR;
+	if (L == NULL || e == NULL || i < 1 || i > L->length || LinearList_Empty(L)){
+		return false;
 	}
 
 	*e = L->base[i-1];
 
-	return PASS;
+	return true;
 }
 
 int LinearList_ListLength(linear_list* L){
 	if (L == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	return L->length;
@@ -78,18 +94,18 @@ int LinearList_ListLength(linear_list* L){
 int LinearList_Insert(linear_list* L, uint32_t i,\
 ElemType e){
 	if (i < 1 || i > (L->length + 1) || L == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	// list full
-	if (L->length == L->listsize){
+	if (LinearList_Full(L)){
 		// realloc new list buffer
 		ElemType* newbase = (ElemType *)\
 		realloc(L->base, (LINEAR_LIST_INIT_SIZE + LINEAR_LIST_INCREMENT)\
 	 	* sizeof(ElemType));
 
 		if (newbase == NULL){
-			return MALLOC_ERROR;
+			return false;
 		}
 
 		L->base = newbase;
@@ -107,12 +123,12 @@ ElemType e){
 
 	L->length++;
 
-	return PASS;
+	return true;
 }
 
 int LinearList_Delete(linear_list* L, uint32_t i, ElemType* e){
 	if(L == NULL || i < 1 || i > L->length){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	ElemType* pointer = &L->base[i - 1];
@@ -126,12 +142,12 @@ int LinearList_Delete(linear_list* L, uint32_t i, ElemType* e){
 
 	L->length--;
 
-	return PASS;
+	return true;
 }
 
 int LinearList_LocateElem(linear_list* L, ElemType* e, int(*b_f)(ElemType* a, ElemType* b)){
 	if(L == NULL || b_f == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	uint32_t i = 0;
@@ -141,7 +157,7 @@ int LinearList_LocateElem(linear_list* L, ElemType* e, int(*b_f)(ElemType* a, El
 		}
 	}
 
-	return FAILED;
+	return false;
 }
 
 // order = 1 mean ascending order
@@ -152,7 +168,7 @@ int LinearList_Sort(linear_list* L, int order){
 	uint32_t i = 0;
 	uint32_t j = 0;
 	if (L == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	for(i = L->length - 1; i > 0; i--){
@@ -176,18 +192,18 @@ int LinearList_Sort(linear_list* L, int order){
 		}
 	}
 
-	return PASS;
+	return true;
 }
 
 int LinearList_Merge(linear_list* L0, linear_list* L1, linear_list* L_Merge, int order){
 	if (L0 == NULL || L1 == NULL || L_Merge == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 	LinearList_Sort(L0, order);
 	LinearList_Sort(L1, order);
 
-	if (LinearList_Init(L_Merge) != PASS){
-		return FAILED;
+	if (LinearList_Init(L_Merge) != true){
+		return false;
 	}
 	uint32_t p_l0 = 0;
 	uint32_t p_l1 = 0;
@@ -218,7 +234,7 @@ int LinearList_Merge(linear_list* L0, linear_list* L1, linear_list* L_Merge, int
 		LinearList_Append (L_Merge, L1->base[p_l1++]);
 	}
 
-	return PASS;
+	return true;
 }
 
 

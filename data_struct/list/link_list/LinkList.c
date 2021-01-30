@@ -2,18 +2,18 @@
 
 int LinkList_Init(link_list* header){
 	if (header == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	header->next = NULL;
 
-	return PASS;
+	return true;
 }
 
 int LinkList_GetElem(link_list* header,\
  uint32_t i, LL_ElemType* e){
 	if(header == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* p = header;
@@ -26,17 +26,17 @@ int LinkList_GetElem(link_list* header,\
 	// j==i || p==NULL
 
 	if(!p){
-		return FAILED;
+		return false;
 	}
 
 	*e = p->data;
 
-	return PASS;
+	return true;
 }
 
 int LinkList_LocateElem(link_list* header, LL_ElemType* e, uint32_t* locate){
 	if(header == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	uint32_t temp = 1;
@@ -48,16 +48,16 @@ int LinkList_LocateElem(link_list* header, LL_ElemType* e, uint32_t* locate){
 	}
 
 	if(!p){
-		return FAILED;
+		return false;
 	}
 
 	*locate = temp;
-	return PASS;
+	return true;
 }
 
 int LinkList_Length(link_list* header){
 	if(header == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* p = header->next;
@@ -73,7 +73,7 @@ int LinkList_Length(link_list* header){
 
 int LinkList_InsertElem(link_list* header, int i, LL_ElemType* e){
 	if (header == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* p = header;
@@ -86,7 +86,7 @@ int LinkList_InsertElem(link_list* header, int i, LL_ElemType* e){
 
 	// j==i-1 || p==NULL
 	if(!p){
-		return FAILED;
+		return false;
 	}
 
 	link_list* q = (link_list*)malloc(sizeof(link_list));
@@ -94,12 +94,12 @@ int LinkList_InsertElem(link_list* header, int i, LL_ElemType* e){
 	q->next = p->next;
 	p->next = q;
 
-	return PASS;
+	return true;
 }
 
 int LinkList_DeleteElem(link_list* header, int i, LL_ElemType* e){
 	if (header == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* p = header;
@@ -112,7 +112,7 @@ int LinkList_DeleteElem(link_list* header, int i, LL_ElemType* e){
 
 	// j == i-1 || p == NULL
 	if(!p || !p->next){
-		return FAILED;
+		return false;
 	}
 
 	// j == i-1
@@ -122,7 +122,7 @@ int LinkList_DeleteElem(link_list* header, int i, LL_ElemType* e){
 
 	free(q);
 
-	return PASS;
+	return true;
 }
 
 // order = 1 mean ascending order
@@ -130,7 +130,7 @@ int LinkList_DeleteElem(link_list* header, int i, LL_ElemType* e){
 // bubble sort
 int LinkList_Sort(link_list* header, int order){
 	if(header == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* tail = NULL;
@@ -157,12 +157,12 @@ int LinkList_Sort(link_list* header, int order){
 		tail = p;
 	}
 
-	return PASS;
+	return true;
 }
 
 int LinkList_Merge(link_list* L0, link_list* L1, link_list* L_Merge, int order){
 	if (L0 == NULL || L1 == NULL || L_Merge == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* L0_P = L0->next;
@@ -202,12 +202,12 @@ int LinkList_Merge(link_list* L0, link_list* L1, link_list* L_Merge, int order){
 		L1_P = L1_P->next;
 	}
 
-	return PASS;
+	return true;
 }
 
 int LinkList_PriorInsert(link_list* p, LL_ElemType* e){
 	if (p == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_list* new = (link_list*)malloc(sizeof(link_list));
@@ -217,6 +217,6 @@ int LinkList_PriorInsert(link_list* p, LL_ElemType* e){
 	p->data = *e;
 	p->next = new;
 
-	return PASS;
+	return true;
 }
 

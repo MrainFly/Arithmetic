@@ -9,30 +9,30 @@
 
 int LinkQueue_Init(link_queue* queue){
 	if (queue == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	queue->head = queue->rear = (link_queue_elem*)malloc(sizeof(link_queue_elem));
 	queue->head->next = NULL;
 
-	return PASS;
+	return true;
 }
 
 int LinkQueue_Empty(link_queue* queue){
 	if (queue == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	if(queue->head == queue->rear){
-		return PASS;
+		return true;
 	}
 
-	return FAILED;
+	return false;
 }
 
 int LinkQueue_Insert(link_queue* queue, LinkQueue_Elem* e){
 	if(queue == NULL || e == NULL){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_queue_elem* pointer = (link_queue_elem*)malloc(sizeof(link_queue_elem));
@@ -42,12 +42,12 @@ int LinkQueue_Insert(link_queue* queue, LinkQueue_Elem* e){
 	queue->rear->next = pointer;
 	queue->rear = pointer;
 
-	return PASS;
+	return true;
 }
 
 int LinkQueue_Delete(link_queue* queue, LinkQueue_Elem* e){
 	if(queue == NULL || e == NULL || !LinkQueue_Empty(queue)){
-		return PARAMETER_ERROR;
+		return false;
 	}
 
 	link_queue_elem* pointer = queue->head->next;
@@ -62,6 +62,6 @@ int LinkQueue_Delete(link_queue* queue, LinkQueue_Elem* e){
 
 	free(pointer);
 
-	return PASS;
+	return true;
 }
 

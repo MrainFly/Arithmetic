@@ -6,9 +6,4 @@
 #include <stdint.h>
 #include <string.h>
 
-#define PASS             (0)
-#define FAILED           (-1)
-#define MALLOC_ERROR     (-2)
-#define PARAMETER_ERROR  (-3)
-
 #endif
