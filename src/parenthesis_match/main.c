@@ -21,11 +21,11 @@ int main(){
 		char c = match_string[num];
 		if(c == '{' || c == '(' || c == '['){
 			// push the character to stack
-			assert(!LinearStack_Push(&stack, &c));
+			assert(!LinearStack_Push(&stack, (LinearStack_ElemType*)&c));
 		}
 
 		if(c == '}' || c == ')' || c == ']'){
-			assert(!LinearStack_Pop(&stack, &c_pop));
+			assert(!LinearStack_Pop(&stack, (LinearStack_ElemType*)&c_pop));
 
 
 			if((c_pop == '{' && c == '}') || (c_pop == '[' && c == ']') || (c_pop == '(' && c == ')')){
@@ -39,7 +39,7 @@ int main(){
 	}
 
 	while(LinearStack_Empty(&stack)){
-		LinearStack_Pop(&stack, &c_pop);
+		LinearStack_Pop(&stack, (LinearStack_ElemType*)&c_pop);
 		LOG("[Error] residue character: %c", c_pop);
 	}
 

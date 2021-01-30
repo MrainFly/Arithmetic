@@ -50,3 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# eclipse
+.cproject
+.project
+.settings/
+
+# makefile system
+out/
+lib/

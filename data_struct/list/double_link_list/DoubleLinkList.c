@@ -15,6 +15,8 @@ int DoubleLinkList_Init(double_link_list* header){
 	header->data = 0;
 	header->next = NULL;
 	header->prior = NULL;
+
+	return true;
 }
 
 int DoubleLinkList_GetElem(double_link_list* header, uint32_t i, D_ElemType* e){
