@@ -22,9 +22,9 @@ void component_fetch_data(int* data){
 	uint32_t coefficient = 1;
 	uint32_t data_t = 0;
 	int t_pop;
-	while(LinearStack_Empty(&component)){
-		LinearStack_Pop(&component, &t_pop);
-		data_t += (t_pop - 48) * coefficient;
+	while(!LinearStack_Empty(&component)){
+		LinearStack_Pop(&component, (int *)&t_pop);
+		data_t += ((t_pop & 0xff) - 48) * coefficient;
 		coefficient *= 10;
 	}
 
@@ -47,13 +47,13 @@ int main(){
 			continue;
 		}
 
-		while(LinearStack_Empty(&component)){
+		if(!LinearStack_Empty(&component)){
 			component_fetch_data(&data);
 			// push the data into stack
 			LinearStack_Push(&object, &data);
 		}
 
-		if(!LinearStack_Empty(&operator)){
+		if(LinearStack_Empty(&operator)){
 			LinearStack_Push(&operator, (int*)&character);
 			continue;
 		}
@@ -66,7 +66,7 @@ int main(){
 			int left;
 			int right;
 			int result;
-			while(LinearStack_Empty(&operator)){
+			while(!LinearStack_Empty(&operator)){
 				LinearStack_Pop(&operator, (int*)&t_c);
 				if(t_c == '('){
 					LinearStack_Push(&operator, (int*)&t_c);
@@ -107,7 +107,7 @@ int main(){
 			int right;
 			int result;
 
-			while(LinearStack_Empty(&operator)){
+			while(!LinearStack_Empty(&operator)){
 				LinearStack_Pop(&operator, (int*)&t_c);
 				if(t_c == '(' || t_c == '+' || t_c == '-'){
 					LinearStack_Push(&operator, (int*)&t_c);
@@ -145,7 +145,7 @@ int main(){
 			int right;
 			int result;
 
-			while(LinearStack_Empty(&operator)){
+			while(!LinearStack_Empty(&operator)){
 				LinearStack_Pop(&operator, (int*)&t_c);
 				if(t_c == '('){
 					break;
@@ -181,13 +181,13 @@ int main(){
 		int left;
 		int right;
 		int result;
-		while(LinearStack_Empty(&component)){
+		if(!LinearStack_Empty(&component)){
 			component_fetch_data(&data);
 			// push the data into stack
 			LinearStack_Push(&object, &data);
 		}
 
-		while(LinearStack_Empty(&operator)){
+		while(!LinearStack_Empty(&operator)){
 			LinearStack_Pop(&operator, (int*)&t_c);
 
 			// + - * /
