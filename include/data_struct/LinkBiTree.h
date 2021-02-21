@@ -10,7 +10,12 @@
 
 #include "inner.h"
 
-typedef int LinkBiTree_ElemType;
+extern uint32_t LinkBiTree_MallocSize;
+
+#define LinkBiTree_Type(type)   LinkBiTree_MallocSize = sizeof(type)
+
+// Genericity
+typedef void* LinkBiTree_ElemType;
 
 typedef struct __link_bi_tree{
 	LinkBiTree_ElemType data;
